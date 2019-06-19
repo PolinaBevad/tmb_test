@@ -7,6 +7,7 @@ from tmb.distribution import calculate_tmb
 from multiprocessing import Pool
 
 
+#TODO: add logger
 def main():
     config = parse_config()
     exons = BedReader(config.bed).exonList
