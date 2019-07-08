@@ -11,12 +11,13 @@ class BedReader:
     def read_bed(self, path):
         exonlist = []
 
-        file = open(path, "r")
-        for x in file:
-            line = x.split()
-            if len(line) == 4:
-                exome = Exome(str(line[0]), int(line[1]), int(line[2]), str(line[3]))
-            else:
-                exome = Exome(str(line[0]), int(line[1]), int(line[2]), '.')
-            exonlist.append(exome)
+        with open(path, "r") as file:
+            for line in file:
+                if not line == '\n':
+                    line_cols = line.split()
+                    if len(line_cols) == 4:
+                        exome = Exome(str(line_cols[0]), int(line_cols[1]), int(line_cols[2]), str(line_cols[3]))
+                    else:
+                        exome = Exome(str(line_cols[0]), int(line_cols[1]), int(line_cols[2]), '.')
+                    exonlist.append(exome)
         return exonlist
