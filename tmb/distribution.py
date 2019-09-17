@@ -59,7 +59,7 @@ def fill_maps_pileup(bam, exon):
             continue
 
         # print(f'position: {position}')
-        good_reads = list(filter(good_pileupread, pileupcolumn.pileups))
+        good_reads = list(filter(good_read, pileupcolumn.pileups))
         for pileupread in good_reads:
             if pileupread.indel > 0:
                 insertion(exon, pileupread, position, positions_to_acgt)
@@ -144,6 +144,7 @@ def check_oper(opers, start, exon, read):
     if opers + start < exon.start:
         return shift, True
     return shift, False
+
 
 def single_nucleotide(pileupread, position, positions_to_acgt):
     base_quality = pileupread.alignment.query_qualities[pileupread.query_position]
@@ -237,25 +238,13 @@ def dist_by_percentage(normal_counts, tumor_counts, position, somatic_sites):
             break
 
 
-def good_pileupread(read):
-    """good_read(read) --> Check if read fits criteria for quality
+def good_read(read_alignment):
+    """good_read(read_alignment) --> Check if read fits criteria for quality
 
-    :param read: SAM file record
+    :param read_alignment: SAM file record (or pileup alignment)
     :return: true if read is fit criteria, false if not
     """
-    if read.alignment.mapping_quality < Config.mapq:
-        return False
-    # TODO: add other checks
-    return True
-
-
-def good_read(read):
-    """good_read(read) --> Check if read fits criteria for quality
-
-    :param read: SAM file record
-    :return: true if read is fit criteria, false if not
-    """
-    if read.mapping_quality < Config.mapq:
+    if read_alignment.mapping_quality < Config.mapq:
         return False
     # TODO: add other checks
     return True
