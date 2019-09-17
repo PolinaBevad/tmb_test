@@ -1,0 +1,5 @@
+Version 0.2
+    - DEleted submodule
+    - added changelog.txt
+    - added release notes script
+
