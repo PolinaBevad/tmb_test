@@ -37,10 +37,7 @@ function update_release_notes {
 
 update_release_notes
 
-# Update sub-projects
-git submodule foreach git pull origin master
-
-# Tag and push tags 
+# Tag and push tags
 git tag -a "$TAG" -m "Release $TAG"
 git push origin "$TAG"
 
